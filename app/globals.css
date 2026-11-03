@@ -1,13 +1,7 @@
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --background: #05060a;
+  --foreground: #ffffff;
+  color-scheme: dark;
 }
 
 html {
@@ -42,8 +36,73 @@ a {
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+/* page transitions: forward slides left, back slides right */
+::view-transition {
+  pointer-events: none;
+}
+
+/* the background lights stay put and keep drifting underneath */
+::view-transition-old(root) {
+  display: none;
+}
+
+::view-transition-new(root) {
+  animation: none;
+}
+
+::view-transition-old(.nav-forward) {
+  --slide-offset: -60px;
+  animation:
+    150ms ease-in both fade reverse,
+    400ms ease-in-out both slide reverse;
+}
+
+::view-transition-new(.nav-forward) {
+  --slide-offset: 60px;
+  animation:
+    210ms ease-out 150ms both fade,
+    400ms ease-in-out both slide;
+}
+
+::view-transition-old(.nav-back) {
+  --slide-offset: 60px;
+  animation:
+    150ms ease-in both fade reverse,
+    400ms ease-in-out both slide reverse;
+}
+
+::view-transition-new(.nav-back) {
+  --slide-offset: -60px;
+  animation:
+    210ms ease-out 150ms both fade,
+    400ms ease-in-out both slide;
+}
+
+@keyframes fade {
+  from {
+    filter: blur(3px);
+    opacity: 0;
+  }
+  to {
+    filter: blur(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide {
+  from {
+    translate: var(--slide-offset);
+  }
+  to {
+    translate: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(*),
+  ::view-transition-new(*),
+  ::view-transition-group(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
   }
 }

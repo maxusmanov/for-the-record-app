@@ -1,0 +1,28 @@
+.button {
+  width: 100%;
+  padding: 16px;
+  border-radius: 999px;
+  font-size: 18px;
+  font-family: inherit;
+  cursor: pointer;
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+.primary {
+  background: white;
+  color: black;
+  border: none;
+}
+
+.secondary {
+  background: transparent;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+.button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
