@@ -1,0 +1,132 @@
+.main {
+  min-height: 100vh;
+  color: white;
+  /* bottom padding leaves room for the floating nav */
+  padding: 56px 24px 120px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+/* dims the bokeh lights so the cards stay readable */
+.main::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: rgba(5, 6, 10, 0.45);
+  pointer-events: none;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+/* thin and wide, like the title around the disc */
+.title {
+  font-size: 22px;
+  font-weight: 300;
+  letter-spacing: 3px;
+}
+
+.bell {
+  width: 22px;
+  height: 22px;
+  border: none;
+  background: white;
+  -webkit-mask: url(/icons/bell.svg) center / contain no-repeat;
+  mask: url(/icons/bell.svg) center / contain no-repeat;
+  cursor: pointer;
+}
+
+.tabs {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.tab {
+  padding: 4px 0 12px;
+  margin-bottom: -1px;
+  border-bottom: 2px solid transparent;
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.activeTab {
+  color: white;
+  border-bottom-color: var(--accent);
+}
+
+.section {
+  margin-top: 32px;
+}
+
+.heading {
+  font-size: 20px;
+  font-weight: 300;
+  margin-bottom: 14px;
+}
+
+/* scrolls sideways and runs to the screen edges, while the first card
+   still lines up with the 24px page padding */
+.row {
+  display: flex;
+  gap: 12px;
+  margin: 0 -24px;
+  padding: 0 24px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding: 0 24px;
+  scrollbar-width: none;
+}
+
+.row::-webkit-scrollbar {
+  display: none;
+}
+
+.row > * {
+  scroll-snap-align: start;
+}
+
+/* frosted glass panel */
+.empty {
+  margin-top: 40px;
+  padding: 32px 24px;
+  border-radius: 20px;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-fill);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  text-align: center;
+}
+
+.emptyTitle {
+  font-size: 17px;
+  font-weight: 300;
+}
+
+.emptyHint {
+  margin-top: 6px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* search results: two cards per row on a phone */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 142px);
+  justify-content: space-between;
+  gap: 16px 12px;
+}
+
+.message {
+  margin-top: 24px;
+  text-align: center;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.6);
+}
