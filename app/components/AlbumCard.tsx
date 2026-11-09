@@ -1,9 +1,17 @@
 import Image from "next/image";
 import type { Album } from "@/lib/types";
 import { placeholderGradient } from "./placeholderGradient";
+import StarRating from "./StarRating";
 import styles from "./AlbumCard.module.css";
 
-export default function AlbumCard({ album }: { album: Album }) {
+type AlbumCardProps = {
+  album: Album;
+  // pass onRate to let the user rate the album right on the card
+  userRating?: number;
+  onRate?: (stars: number) => void;
+};
+
+export default function AlbumCard({ album, userRating, onRate }: AlbumCardProps) {
   return (
     <article className={styles.card}>
       <div className={styles.cover} style={{ background: placeholderGradient(album.id) }}>
@@ -19,6 +27,11 @@ export default function AlbumCard({ album }: { album: Album }) {
         <p className={styles.rating} aria-label={`rated ${album.averageRating} out of 5`}>
           ★ {album.averageRating.toFixed(1)}
         </p>
+      )}
+      {onRate && (
+        <div className={styles.stars}>
+          <StarRating value={userRating} onChange={onRate} label={`rate ${album.title}`} />
+        </div>
       )}
     </article>
   );

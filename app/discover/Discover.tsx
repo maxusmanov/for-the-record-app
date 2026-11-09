@@ -9,6 +9,8 @@ import BottomNav from "../components/BottomNav";
 import PageTransition from "../components/PageTransition";
 import type { Album, Artist } from "@/lib/types";
 import { useAlbumSearch } from "./useAlbumSearch";
+import { useRatings } from "@/lib/useRatings";
+import { toRatingInput } from "@/lib/ratings";
 import styles from "./page.module.css";
 
 type DiscoverProps = {
@@ -21,6 +23,8 @@ export default function Discover({ albums, artists }: DiscoverProps) {
   const [query, setQuery] = useState("");
   const { albums: results, status } = useAlbumSearch(query);
   const searching = query.trim() !== "";
+  // trending albums come from Apple, so only Spotify search results can be rated
+  const { ratingOf, rate, saveFailed } = useRatings();
 
   return (
     <PageTransition>
@@ -58,9 +62,19 @@ export default function Discover({ albums, artists }: DiscoverProps) {
             {status !== "error" && results.length > 0 && (
               <div className={styles.grid}>
                 {results.map((album) => (
-                  <AlbumCard key={album.id} album={album} />
+                  <AlbumCard
+                    key={album.id}
+                    album={album}
+                    userRating={ratingOf(album.id)}
+                    onRate={(stars) => rate(toRatingInput(album, stars))}
+                  />
                 ))}
               </div>
+            )}
+            {saveFailed && (
+              <p className={styles.message} role="alert">
+                could not save your rating, try again
+              </p>
             )}
           </section>
         ) : (
