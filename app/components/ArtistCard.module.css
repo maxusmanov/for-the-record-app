@@ -1,0 +1,77 @@
+/* frosted glass card */
+.card {
+  width: 128px;
+  flex-shrink: 0;
+  padding: 16px 12px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-fill);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.photo {
+  position: relative;
+  width: 88px;
+  height: 88px;
+  border-radius: 999px;
+  overflow: hidden;
+  border: 1px solid var(--glass-border);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image {
+  object-fit: cover;
+}
+
+.initial {
+  font-size: 36px;
+  font-weight: 300;
+  text-transform: lowercase;
+}
+
+.name,
+.genres {
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.name {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.genres {
+  margin-top: 2px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* small pill, tinted with the accent until you follow */
+.follow {
+  margin-top: 12px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--accent);
+  background: rgba(240, 124, 192, 0.15);
+  color: var(--accent);
+  font-size: 13px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.following {
+  border-color: var(--glass-border);
+  background: var(--glass-fill);
+  color: white;
+}

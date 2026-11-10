@@ -49,3 +49,24 @@ export async function searchAlbums(query: string) {
     coverUrl: a.images?.[0]?.url ?? null,
   }));
 }
+// Finds the best Spotify match for an artist's name, mainly to get their photo.
+export async function findArtist(name: string) {
+  const token = await getAccessToken();
+  const url = `https://api.spotify.com/v1/search?type=artist&limit=1&q=${encodeURIComponent(name)}`;
+
+  const res = await fetch(url, {
+    headers: { Authorization: `Bearer ${token}` },
+    cache: "no-store",
+  });
+
+  if (!res.ok) throw new Error("SPOTIFY_ARTIST_SEARCH_FAILED");
+
+  const data = await res.json();
+  const artist = data.artists?.items?.[0];
+  if (!artist) return null;
+  return {
+    spotifyId: artist.id as string,
+    // images come largest first
+    imageUrl: (artist.images?.[0]?.url as string | undefined) ?? null,
+  };
+}

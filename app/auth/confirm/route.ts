@@ -3,7 +3,7 @@ import type { EmailOtpType } from "@supabase/supabase-js";
 import { createClient } from "@/lib/supabase/server";
 
 // The link in the "confirm your email" message lands here. We trade the
-// one-time code in the URL for a logged-in session, then go to /home.
+// one-time code in the URL for a logged-in session, then go to /discover.
 export async function GET(request: NextRequest) {
   const { searchParams, origin } = request.nextUrl;
   const code = searchParams.get("code");
@@ -21,5 +21,5 @@ export async function GET(request: NextRequest) {
       : { error: new Error("missing code") };
 
   // If it fails, the email is usually still confirmed, so they can just log in.
-  return NextResponse.redirect(new URL(error ? "/login" : "/home", origin));
+  return NextResponse.redirect(new URL(error ? "/login" : "/discover", origin));
 }
