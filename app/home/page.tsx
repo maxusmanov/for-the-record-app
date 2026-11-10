@@ -12,6 +12,9 @@ export default function Home() {
         <Greeting />
       </Suspense>
       <div className={styles.actions}>
+      <div style={{ marginBottom: 12 }}>
+        <Button href="/search" transitionTypes={["nav-forward"]}>search albums</Button>
+      </div>
         <Button variant="secondary">log out</Button>
       </div>
     </form>
