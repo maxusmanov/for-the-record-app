@@ -1,0 +1,272 @@
+.section {
+  margin-top: 32px;
+}
+
+.headingRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.heading {
+  font-size: 20px;
+  font-weight: 300;
+}
+
+.edit {
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--accent);
+  font-family: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.grid {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.item {
+  min-width: 0;
+}
+
+/* a square stage for the record. The perspective makes the flip look 3D. */
+.tile {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  padding: 0;
+  border: none;
+  background: none;
+  perspective: 600px;
+  cursor: pointer;
+}
+
+.tile:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 50%;
+}
+
+.flip {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 800ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.flipped {
+  transform: rotateY(180deg);
+}
+
+.vinyl,
+.sleeve {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* black disc with fine grooves */
+.vinyl {
+  border-radius: 50%;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.2), transparent 45%),
+    repeating-radial-gradient(circle at center, #0a0a0e 0 2px, #1a1a22 2px 3px);
+  box-shadow:
+    0 6px 16px rgba(0, 0, 0, 0.55),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+/* light catching the grooves, turning slowly like a record on a player */
+.shine {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0 18%,
+    rgba(255, 255, 255, 0.14) 25%,
+    transparent 32% 68%,
+    rgba(255, 255, 255, 0.14) 75%,
+    transparent 82%
+  );
+  animation: spin 7s linear infinite;
+}
+
+/* the paper label in the middle shows the album art */
+.label {
+  position: absolute;
+  inset: 32%;
+  border-radius: 50%;
+  border: 2px solid rgba(0, 0, 0, 0.55);
+}
+
+.hole {
+  position: absolute;
+  inset: 47%;
+  border-radius: 50%;
+  background: var(--background);
+}
+
+/* the back of the flip: the album cover */
+.sleeve {
+  transform: rotateY(180deg);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.55);
+}
+
+.cover {
+  object-fit: cover;
+}
+
+.name {
+  margin-top: 8px;
+  font-size: 11px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.7);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* an empty favorite spot */
+.slot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 1;
+  padding: 0;
+  border: 1px dashed rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  background: var(--glass-fill);
+  color: rgba(255, 255, 255, 0.6);
+  font-family: inherit;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* the picker */
+.sheetTitle {
+  font-size: 20px;
+  font-weight: 300;
+}
+
+.sheetHint {
+  margin-top: 6px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.pickList {
+  list-style: none;
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pick {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px 8px 8px;
+  border-radius: 16px;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-fill);
+  color: white;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.pick:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.picked {
+  border-color: var(--accent);
+}
+
+.thumb {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.pickText {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.pickTitle {
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pickArtist {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.check {
+  width: 20px;
+  color: var(--accent);
+  font-size: 18px;
+  text-align: center;
+}
+
+.done {
+  display: block;
+  width: 100%;
+  margin-top: 20px;
+  padding: 16px;
+  border: none;
+  border-radius: 999px;
+  background: white;
+  color: black;
+  font-family: inherit;
+  font-size: 17px;
+  cursor: pointer;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* no spinning or flipping for people who turned motion off */
+@media (prefers-reduced-motion: reduce) {
+  .flip {
+    transition: none;
+  }
+
+  .shine {
+    animation: none;
+  }
+}
