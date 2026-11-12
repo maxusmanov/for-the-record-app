@@ -9,7 +9,7 @@ function isValidRating(value: unknown): value is number {
     typeof value === "number" &&
     Number.isInteger(value) &&
     value >= 1 &&
-    value <= 4
+    value <= 5
   );
 }
 
@@ -103,7 +103,7 @@ export async function POST(
     return apiError(
       400,
       "INVALID_RATING",
-      "Rating must be an integer between 1 and 4.",
+      "Rating must be an integer between 1 and 5.",
     );
   }
 
