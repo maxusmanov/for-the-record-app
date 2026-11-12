@@ -58,5 +58,6 @@ function toAlbum(a: SpotifyAlbum): Album {
     artist: a.artist,
     year: a.releaseYear ? Number(a.releaseYear) : undefined,
     coverUrl: a.coverUrl ?? undefined,
+    source: "spotify",
   };
 }

@@ -1,5 +1,6 @@
 /* frosted glass card */
 .card {
+  position: relative;
   width: 142px;
   flex-shrink: 0;
   padding: 10px 10px 12px;
@@ -57,7 +58,18 @@
   color: var(--accent);
 }
 
-.stars {
-  margin-top: 8px;
-  margin-left: -2px;
+
+/* a see-through button over the whole card, so the card is pressable */
+.hit {
+  position: absolute;
+  inset: 0;
+  border: none;
+  border-radius: 20px;
+  background: none;
+  cursor: pointer;
+}
+
+.hit:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }

@@ -1,0 +1,274 @@
+.main {
+  min-height: 100vh;
+  color: white;
+  /* bottom padding leaves room for the floating nav */
+  padding: 56px 24px 120px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+/* dims the bokeh lights so the cards stay readable */
+.main::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: rgba(5, 6, 10, 0.45);
+  pointer-events: none;
+}
+
+.header {
+  margin-bottom: 24px;
+}
+
+/* thin and wide, like the title on the discover page */
+.title {
+  font-size: 22px;
+  font-weight: 300;
+  letter-spacing: 3px;
+}
+
+.lead {
+  margin-bottom: 16px;
+  font-size: 20px;
+  font-weight: 300;
+}
+
+.section {
+  margin-top: 28px;
+}
+
+.heading {
+  margin-bottom: 12px;
+  font-size: 20px;
+  font-weight: 300;
+}
+
+.hint {
+  margin-top: 12px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.6);
+  text-align: center;
+}
+
+.error {
+  margin-top: 12px;
+  font-size: 14px;
+  color: #ff6b6b;
+  text-align: center;
+}
+
+/* search results */
+.results {
+  margin-top: 20px;
+}
+
+.list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.result {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px;
+  border-radius: 20px;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-fill);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  color: white;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.thumb {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.image {
+  object-fit: cover;
+}
+
+.resultText {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.resultTitle {
+  font-size: 15px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.resultMeta {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* the album being rated */
+.picked {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  padding: 12px;
+  border-radius: 20px;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-fill);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+}
+
+.cover {
+  position: relative;
+  width: 96px;
+  height: 96px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.pickedInfo {
+  min-width: 0;
+}
+
+.albumTitle {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.albumArtist {
+  margin-top: 4px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.albumMeta {
+  margin-top: 2px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.change {
+  margin-top: 8px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--accent);
+  font-family: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+/* the review box, same glass as the search bar */
+.textarea {
+  width: 100%;
+  padding: 16px 20px;
+  border-radius: 20px;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-fill);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  color: white;
+  font-size: 16px;
+  font-family: inherit;
+  line-height: 1.4;
+  resize: vertical;
+  outline: none;
+}
+
+.textarea:focus {
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+.textarea::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.count {
+  margin-top: 6px;
+  text-align: right;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* white pill, like the main button on the other pages */
+.primary {
+  display: block;
+  width: 100%;
+  margin-top: 24px;
+  padding: 16px;
+  border: none;
+  border-radius: 999px;
+  background: white;
+  color: black;
+  font-family: inherit;
+  font-size: 18px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.primary:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.secondary {
+  display: block;
+  width: 100%;
+  padding: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 999px;
+  background: transparent;
+  color: white;
+  font-family: inherit;
+  font-size: 18px;
+  text-align: center;
+  cursor: pointer;
+}
+
+/* shown after saving */
+.panel {
+  padding: 32px 24px;
+  border-radius: 20px;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-fill);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  text-align: center;
+}
+
+.panelTitle {
+  font-size: 22px;
+  font-weight: 300;
+}
+
+.actions {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.actions .primary {
+  margin-top: 0;
+}

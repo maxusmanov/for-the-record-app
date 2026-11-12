@@ -41,7 +41,8 @@ export function useRatings() {
     [ratings],
   );
 
-  const rate = useCallback(async (input: RatingInput) => {
+  // resolves to true when the rating was saved
+  const rate = useCallback(async (input: RatingInput): Promise<boolean> => {
     const id = input.spotifyAlbumId;
     const before = latest.current.find((r) => r.spotifyAlbumId === id);
     setSaveFailed(false);
@@ -53,6 +54,7 @@ export function useRatings() {
     try {
       const saved = await saveRating(input, Boolean(before));
       setRatings((current) => current.map((r) => (r.spotifyAlbumId === id ? saved : r)));
+      return true;
     } catch {
       // put things back the way they were
       setRatings((current) => {
@@ -60,6 +62,7 @@ export function useRatings() {
         return before ? [before, ...rest] : rest;
       });
       setSaveFailed(true);
+      return false;
     }
   }, []);
 
