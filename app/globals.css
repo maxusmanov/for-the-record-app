@@ -1,6 +1,12 @@
 :root {
   --background: #05060a;
   --foreground: #ffffff;
+  /* the pink light from the bokeh background */
+  --accent: #f07cc0;
+  /* frosted "liquid glass" surfaces */
+  --glass-fill: rgba(255, 255, 255, 0.08);
+  --glass-border: rgba(255, 255, 255, 0.18);
+  --glass-blur: blur(20px) saturate(160%);
   color-scheme: dark;
 }
 

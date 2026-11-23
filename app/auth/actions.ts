@@ -15,7 +15,7 @@ export async function login(_prev: AuthState, formData: FormData): Promise<AuthS
   const { error } = await supabase.auth.signInWithPassword({ email, password });
   if (error) return { error: error.message.toLowerCase() };
 
-  redirect("/home");
+  redirect("/discover");
 }
 
 export async function signup(_prev: AuthState, formData: FormData): Promise<AuthState> {
@@ -67,7 +67,7 @@ export async function signup(_prev: AuthState, formData: FormData): Promise<Auth
   }
 
   // Signed up and logged in straight away (email confirmation is off).
-  if (data.session) redirect("/home");
+  if (data.session) redirect("/discover");
 
   // Account created, but they're not logged in until they click the email link.
   if (data.user) return { message: "check your email to confirm your account" };
