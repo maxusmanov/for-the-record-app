@@ -8,9 +8,9 @@ import ArtistCard from "../components/ArtistCard";
 import BottomNav from "../components/BottomNav";
 import PageTransition from "../components/PageTransition";
 import type { Album, Artist } from "@/lib/types";
+import AlbumSheet from "./AlbumSheet";
 import { useAlbumSearch } from "./useAlbumSearch";
 import { useRatings } from "@/lib/useRatings";
-import { toRatingInput } from "@/lib/ratings";
 import styles from "./page.module.css";
 
 type DiscoverProps = {
@@ -23,8 +23,10 @@ export default function Discover({ albums, artists }: DiscoverProps) {
   const [query, setQuery] = useState("");
   const { albums: results, status } = useAlbumSearch(query);
   const searching = query.trim() !== "";
-  // trending albums come from Apple, so only Spotify search results can be rated
-  const { ratingOf, rate, saveFailed } = useRatings();
+  // the album whose details are open in the sheet
+  const [selected, setSelected] = useState<Album | null>(null);
+  // used to show "you rated it" in the sheet
+  const { ratingOf } = useRatings();
 
   return (
     <PageTransition>
@@ -62,19 +64,9 @@ export default function Discover({ albums, artists }: DiscoverProps) {
             {status !== "error" && results.length > 0 && (
               <div className={styles.grid}>
                 {results.map((album) => (
-                  <AlbumCard
-                    key={album.id}
-                    album={album}
-                    userRating={ratingOf(album.id)}
-                    onRate={(stars) => rate(toRatingInput(album, stars))}
-                  />
+                  <AlbumCard key={album.id} album={album} onSelect={setSelected} />
                 ))}
               </div>
-            )}
-            {saveFailed && (
-              <p className={styles.message} role="alert">
-                could not save your rating, try again
-              </p>
             )}
           </section>
         ) : (
@@ -85,7 +77,7 @@ export default function Discover({ albums, artists }: DiscoverProps) {
                 <h2 className={styles.heading}>trending albums</h2>
                 <div className={styles.row}>
                   {albums.map((album) => (
-                    <AlbumCard key={album.id} album={album} />
+                    <AlbumCard key={album.id} album={album} onSelect={setSelected} />
                   ))}
                 </div>
               </section>
@@ -104,6 +96,12 @@ export default function Discover({ albums, artists }: DiscoverProps) {
           </>
         )}
       </main>
+      <AlbumSheet
+        album={selected}
+        // only Spotify albums can have a rating
+        userRating={selected?.source === "spotify" ? ratingOf(selected.id) : 0}
+        onClose={() => setSelected(null)}
+      />
       <BottomNav active="search" />
     </PageTransition>
   );

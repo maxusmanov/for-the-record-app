@@ -7,6 +7,7 @@ import StarRating from "../components/StarRating";
 import { placeholderGradient } from "../components/placeholderGradient";
 import { useRatings } from "@/lib/useRatings";
 import type { Rating } from "@/lib/types";
+import Favorites from "./Favorites";
 import styles from "./profile.module.css";
 
 type ProfileViewProps = {
@@ -22,6 +23,9 @@ export default function ProfileView({ name, username, avatarUrl }: ProfileViewPr
   const sorted = [...ratings].sort(
     (a, b) => b.rating - a.rating || b.ratedAt.localeCompare(a.ratedAt),
   );
+
+  // albums the user wrote about, best rated first
+  const reviews = sorted.filter((r) => r.review);
 
   // Followers, following and diary entries don't exist yet, so they show 0.
   const stats = [
@@ -120,18 +124,30 @@ export default function ProfileView({ name, username, avatarUrl }: ProfileViewPr
           )}
         </section>
 
-        <section className={styles.section}>
-          <h2 className={styles.heading}>favorite albums</h2>
-          <div className={styles.empty}>
-            <p className={styles.emptyHint}>your favorite albums will show up here</p>
-          </div>
-        </section>
+        <Favorites ratings={sorted} />
 
         <section className={styles.section}>
           <h2 className={styles.heading}>reviews</h2>
-          <div className={styles.empty}>
-            <p className={styles.emptyHint}>your written reviews will show up here</p>
-          </div>
+          {reviews.length === 0 ? (
+            <div className={styles.empty}>
+              <p className={styles.emptyHint}>
+                <Link href="/rate" className={styles.link}>write a review</Link> and it will show up here
+              </p>
+            </div>
+          ) : (
+            <ul className={styles.list}>
+              {reviews.map((r) => (
+                <li key={r.spotifyAlbumId} className={styles.review}>
+                  <div className={styles.reviewTop}>
+                    <p className={styles.albumName}>{r.albumName}</p>
+                    <StarRating value={r.rating} />
+                  </div>
+                  <p className={styles.albumArtist}>{r.artistName}</p>
+                  <p className={styles.reviewText}>{r.review}</p>
+                </li>
+              ))}
+            </ul>
+          )}
         </section>
       </main>
       <BottomNav active="you" />

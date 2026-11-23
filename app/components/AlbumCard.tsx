@@ -1,17 +1,15 @@
 import Image from "next/image";
 import type { Album } from "@/lib/types";
 import { placeholderGradient } from "./placeholderGradient";
-import StarRating from "./StarRating";
 import styles from "./AlbumCard.module.css";
 
 type AlbumCardProps = {
   album: Album;
-  // pass onRate to let the user rate the album right on the card
-  userRating?: number;
-  onRate?: (stars: number) => void;
+  // called when the card is pressed
+  onSelect?: (album: Album) => void;
 };
 
-export default function AlbumCard({ album, userRating, onRate }: AlbumCardProps) {
+export default function AlbumCard({ album, onSelect }: AlbumCardProps) {
   return (
     <article className={styles.card}>
       <div className={styles.cover} style={{ background: placeholderGradient(album.id) }}>
@@ -28,10 +26,13 @@ export default function AlbumCard({ album, userRating, onRate }: AlbumCardProps)
           ★ {album.averageRating.toFixed(1)}
         </p>
       )}
-      {onRate && (
-        <div className={styles.stars}>
-          <StarRating value={userRating} onChange={onRate} label={`rate ${album.title}`} />
-        </div>
+      {onSelect && (
+        <button
+          type="button"
+          className={styles.hit}
+          aria-label={`${album.title} by ${album.artist}, view details`}
+          onClick={() => onSelect(album)}
+        />
       )}
     </article>
   );

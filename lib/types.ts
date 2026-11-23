@@ -8,6 +8,9 @@ export type Album = {
   // average of all ratings, out of 5
   averageRating?: number;
   coverUrl?: string;
+  // "spotify" for Spotify search results, which are the only albums that can be
+  // rated. Albums from Apple's chart don't have a Spotify id.
+  source?: "spotify";
 };
 
 export type Artist = {
@@ -29,6 +32,8 @@ export type RatingInput = {
   artistName: string;
   coverUrl: string | null;
   releaseYear: string | null;
+  // the written review, if the user wrote one
+  review?: string | null;
 };
 
 // What GET /api/ratings sends back for each saved rating.

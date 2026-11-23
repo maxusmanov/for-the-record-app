@@ -27,7 +27,7 @@ function writeMock(ratings: Rating[]) {
 }
 
 // Turns a Spotify search result into the data we send when rating it.
-export function toRatingInput(album: Album, stars: number): RatingInput {
+export function toRatingInput(album: Album, stars: number, review?: string | null): RatingInput {
   return {
     spotifyAlbumId: album.id,
     rating: stars,
@@ -35,6 +35,7 @@ export function toRatingInput(album: Album, stars: number): RatingInput {
     artistName: album.artist,
     coverUrl: album.coverUrl ?? null,
     releaseYear: album.year ? String(album.year) : null,
+    review: review ?? null,
   };
 }
 
@@ -73,4 +74,45 @@ export async function saveRating(input: RatingInput, alreadyRated: boolean): Pro
 
   const data: { rating: Rating } = await res.json();
   return data.rating;
+}
+
+// The link to the rate page for an album.
+// Spotify albums carry their details in the link, so the page can open them
+// straight away. Other albums (from Apple's chart) open a Spotify search
+// for that name, and the user picks the right result.
+export function rateHref(album: Album): string {
+  const params = new URLSearchParams();
+  if (album.source === "spotify") {
+    params.set("id", album.id);
+    params.set("title", album.title);
+    params.set("artist", album.artist);
+    if (album.year) params.set("year", String(album.year));
+    if (album.coverUrl) params.set("cover", album.coverUrl);
+  } else {
+    params.set("q", `${album.title} ${album.artist}`);
+  }
+  return `/rate?${params.toString()}`;
+}
+
+// Reads an album back out of the rate page link. Returns null unless the
+// link holds a real looking Spotify album.
+export function albumFromParams(params: Record<string, string | string[] | undefined>): Album | null {
+  const get = (key: string) => (typeof params[key] === "string" ? (params[key] as string) : undefined);
+  const id = get("id");
+  const title = get("title");
+  const artist = get("artist");
+  // Spotify album ids are 22 letters and numbers
+  if (!id || !title || !artist || !/^[A-Za-z0-9]{22}$/.test(id)) return null;
+
+  const year = Number(get("year"));
+  const cover = get("cover");
+  return {
+    id,
+    title,
+    artist,
+    year: year || undefined,
+    // only Spotify's image server is allowed, see next.config.ts
+    coverUrl: cover?.startsWith("https://i.scdn.co/image/") ? cover : undefined,
+    source: "spotify",
+  };
 }
